@@ -4,7 +4,7 @@
   "description": "Fast hashmap implementation optimized for string keys",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/k-koehler/fast-string-map/issues"
   },
-  "homepage": "https://github.com/k-koehler/fast-string-map#readme"
+  "homepage": "https://github.com/k-koehler/fast-string-map#readme",
+  "devDependencies": {
+    "jest": "^25.2.1"
+  }
 }
