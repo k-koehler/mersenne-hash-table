@@ -1,5 +1,6 @@
 "use-strict";
 const { simpleHash32 } = require("./hash");
+const { mersennePrime } = require("./mersenne");
 
 function fastRemoveElem(arr, i) {
   const tmp = arr[arr.length - 1];
@@ -8,21 +9,41 @@ function fastRemoveElem(arr, i) {
   arr.pop();
 }
 
-const DEFAULT_TABLE_SIZE_L_SHIFT = 9;
-
-// TODO: use mersenne primes for table size
-// TODO: handle grow
-// TODO: values method
 class FastStringMap {
   constructor() {
-    this._size_factor = DEFAULT_TABLE_SIZE_L_SHIFT;
-    this._capacity = 0x2 << this._size_factor;
+    this._mersenneIndex = 4;
+    this._mersenneGenerator = mersennePrime();
+    this._capacity = this._mersenneGenerator.next().value;
     this._table = new Array(this._capacity);
     this.size = 0;
   }
 
+  _incrementMersenne() {
+    ++this._mersenneIndex;
+    this._capacity = this._mersenneGenerator.next().value;
+  }
+
   _indexOfKey(key) {
-    return simpleHash32(key) & (this._capacity - 1);
+    return simpleHash32(key) & this._capacity;
+  }
+
+  _grow() {
+    this._incrementMersenne();
+    const table = this._table,
+      { length } = this._table;
+    this._table = new Array(this._capacity);
+    this._size = 0;
+    let i = 0;
+    for (; i < length; ++i) {
+      let bucket;
+      if ((bucket = table[i])) {
+        let j = 0,
+          { length: bucketLength } = bucket;
+        for (; j < bucketLength; ++j) {
+          this.set(bucket[j][0], bucket[j][1]);
+        }
+      }
+    }
   }
 
   /**
@@ -59,6 +80,9 @@ class FastStringMap {
       table[index] = [[key, value]];
     }
     ++this.size;
+    if (this.size === this._capacity) {
+      this._grow();
+    }
     return this;
   }
 
@@ -80,6 +104,30 @@ class FastStringMap {
       }
     }
     return this;
+  }
+
+  /**
+   * retreive the entries in the map
+   * @returns array of [key, value] pairs
+   */
+  entries() {
+    const table = this._table,
+      values = new Array(this.size).fill([]);
+    let { length } = table,
+      i = 0,
+      cur = 0;
+    for (; i < length; ++i) {
+      if (table[i] !== undefined) {
+        let { length: bucketLength } = table[i],
+          j = 0;
+        for (; j < bucketLength; ++j) {
+          let valueIdx = cur++;
+          values[valueIdx].push(table[i][j][0]);
+          values[valueIdx].push(table[i][j][1]);
+        }
+      }
+    }
+    return values;
   }
 }
 

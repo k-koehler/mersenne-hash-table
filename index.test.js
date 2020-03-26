@@ -19,6 +19,49 @@ describe("FastStringMap", () => {
     });
   });
 
+  describe("grow", () => {
+    it("should grow", () => {
+      const map = new Map();
+      for (let i = 0; i < 126; ++i) {
+        map.set(`${i}`, i);
+        expect(map.size).toBe(i + 1);
+      }
+      expect(map._capacity).toBe(127);
+      expect(map.size).toBe(126);
+      map.set("foo", "bar");
+      expect(map._capacity).toBe(8191);
+      expect(map.get("foo")).toBe("bar");
+      for (let i = 0; i < 126; ++i) {
+        expect(map.get(`${i}`, i)).toBe(i);
+      }
+    });
+  });
+
+  describe("entries", () => {
+    it("shoud return empty arr, map is empty", () => {
+      const map = new Map();
+      expect(map.entries()).toEqual([]);
+    });
+
+    it("shoud return a few k,v pairs", () => {
+      const map = new Map().set("foo", "bar").set("bar", "baz");
+      const enties = map.entries();
+      expect(enties).toHaveLength(2);
+      let correct = 0;
+      for (const [key, value] of enties) {
+        if (key === "foo") {
+          ++correct;
+          expect(value).toBe("bar");
+        }
+        if (key === "bar") {
+          ++correct;
+          expect(value).toBe("baz");
+        }
+      }
+      expect(correct).toBe(2);
+    });
+  });
+
   describe.skip("handles collisions properly", () => {
     // TODO: find a collision
     const collisionWordA = "some word",
