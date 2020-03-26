@@ -1,0 +1,28 @@
+{
+  "name": "fast-string-map",
+  "version": "0.0.1",
+  "description": "Fast hashmap implementation optimized for string keys",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k-koehler/fast-string-map.git"
+  },
+  "keywords": [
+    "hashmap",
+    "string",
+    "fast",
+    "map",
+    "hash",
+    "table",
+    "hashtable"
+  ],
+  "author": "k-koehler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/k-koehler/fast-string-map/issues"
+  },
+  "homepage": "https://github.com/k-koehler/fast-string-map#readme"
+}
