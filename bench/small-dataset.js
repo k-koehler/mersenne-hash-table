@@ -1,4 +1,4 @@
-const FastStringMap = require("fast-string-map");
+const FastStringMap = require("mersenne-hash-table");
 const { now } = require("microtime");
 const assert = require("assert");
 

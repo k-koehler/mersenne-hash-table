@@ -9,7 +9,7 @@ function fastRemoveElem(arr, i) {
   arr.pop();
 }
 
-class FastStringMap {
+class MersenneHashTable {
   constructor() {
     this._mersenneIndex = 4;
     this._mersenneGenerator = mersennePrime();
@@ -131,4 +131,4 @@ class FastStringMap {
   }
 }
 
-module.exports = FastStringMap;
+module.exports = MersenneHashTable;

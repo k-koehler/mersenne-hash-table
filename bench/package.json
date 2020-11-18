@@ -4,7 +4,7 @@
   "description": "",
   "dependencies": {
     "assert": "^2.0.0",
-    "fast-string-map": "^0.0.1",
+    "mersenne-hash-table": "0.0.3",
     "microtime": "^3.0.0"
   },
   "devDependencies": {},

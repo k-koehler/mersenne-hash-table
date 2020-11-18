@@ -1,4 +1,4 @@
-const FastStringMap = require("fast-string-map");
+const FastStringMap = require("mersenne-hash-table");
 const { now } = require("microtime");
 
 const DATA_SIZE = 1000000;

@@ -1,6 +1,6 @@
 {
   "name": "mersenne-hash-table",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Fast Node.js hashtable which uses Mersenne primes to reduce modulo operations",
   "main": "index.js",
   "scripts": {
